@@ -2,14 +2,13 @@ import React from 'react';
 import './Card.scss';
 
 export const Card = (props) => {
-    const {title, img, gender, status} = props;
+    const {img, name, description} = props;
     return (
         <>
             <div className='card'>
-                <img className='card-image' src={img} alt={title}/>
-                <h3>{title}</h3>
-                <p>Gender: {gender}</p>
-                <p>Status: {status}</p>
+                <img className='card-image' src={img} alt={name}/>
+                <h3>{name}</h3>
+                <p>{description}</p>
             </div>
         </>
     );

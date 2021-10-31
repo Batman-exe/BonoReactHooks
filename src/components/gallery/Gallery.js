@@ -3,37 +3,36 @@ import './Gallery.scss';
 import { Card } from '../card/Card';
 
 export const Gallery = () => {
-  const url = 'https://rickandmortyapi.com/api/character';
-  const [images, setGifts] = useState([]);
+  let url = 'https://gateway.marvel.com/v1/public/characters?ts=1&apikey=7d7c3c9c7447910b6c8dc516b4447e33&hash=9ce2e9f6378288deacb2e288aba84603';
+  const [characters, setCharacters] = useState([]);
   useEffect(() => {
-    fetchGifts();
+    fetchCharacters();
   }, []);
 
-  const fetchGifts = async () => {
+  const fetchCharacters = async () => {
     const resp = await fetch(url);
     const data = await resp.json();
 
-    const gifSimple = data?.results.map((resp) => {
+    const characterSimple = data?.data.results.map((resp) => {
       return {
         id: resp.id,
-        url: resp.image,
-        title: resp.name,
-        gender: resp.gender,
-        status: resp.status,
+        path: resp.thumbnail.path,
+        ext: resp.thumbnail.extension,
+        name: resp.name,
+        description: resp.description,
       };
     });
-    setGifts(gifSimple);
+    setCharacters(characterSimple);
   };
 
   return (
     <div className='gallery-container'>
-      {images?.map((d) => (
+      {characters?.map((d) => (
         <Card
           key={d.id}
-          title={d.title}
-          img={d.url}
-          gender={d.gender}
-          status={d.status}
+          name={d.name}
+          img={d.path.concat('.').concat(d.ext)}
+          description={d.description}
         ></Card>
       ))}
     </div>
